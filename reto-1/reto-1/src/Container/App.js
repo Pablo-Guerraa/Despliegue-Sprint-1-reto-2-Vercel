@@ -2,15 +2,22 @@ import React, { Component } from 'react'
 import Card from "../Components/Card";
 import { Container, Header } from "../styles/StyledContainerMain";
 import axios from 'axios';
+import FilterKnowledge from '../Components/FilterKnowledge';
 
 
 class App extends Component {
   constructor () {
     super();
     this.state = {
-      business: []
+      business: [],
+      selcted: [],
+      KnowledgeList: true
     }
   }
+
+
+
+
 
   componentDidMount () {
     this.getApi();
@@ -22,20 +29,30 @@ class App extends Component {
     this.setState({
       business: businessData
     })
+  };
 
+  selectKnowledge = (e) => {
+    const nameKnowledge = e.target.innerText;
+    this.setState((state) => {
+      let addKnowledge = state.selcted; 
+      addKnowledge.push(nameKnowledge)
+      return {selcted: addKnowledge}
+    })
   }
 
-  render() {
 
+  render() {
+// console.log(this.state.selcted)
     return (
-      <div className="App">
+    <div className="App">
       <Header />
       <Container>
+        {this.state.KnowledgeList ? <FilterKnowledge selected={this.state.selcted}/> : <div/>}
         {
           this.state.business.map(element => {
             
             return(
-              <Card key={element.id}details={element}/>
+              <Card key={element.id} details={element} selectKnowledge={this.selectKnowledge}/>
             )
           })
         }
