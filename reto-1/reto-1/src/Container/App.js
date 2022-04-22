@@ -14,15 +14,9 @@ class App extends Component {
       KnowledgeList: true
     }
   }
-
-
-
-
-
   componentDidMount () {
     this.getApi();
   }
-
   async getApi () {
     const res = await axios.get("https://sprint-2-reto-1.herokuapp.com/business/");
     const businessData = res.data;
@@ -42,23 +36,22 @@ class App extends Component {
 
 
   render() {
-// console.log(this.state.selcted)
     return (
-    <div className="App">
-      <Header />
-      <Container>
-        {this.state.KnowledgeList ? <FilterKnowledge selected={this.state.selcted}/> : <div/>}
-        {
-          this.state.business.map(element => {
-            
-            return(
-              <Card key={element.id} details={element} selectKnowledge={this.selectKnowledge}/>
-            )
-          })
-        }
-        
-      </Container>
-    </div>
+      <div className="App">
+        <Header />
+        <Container>
+          {this.state.selcted.length > 0 ? <FilterKnowledge selected={this.state.selcted}/> : <div/>}
+          {
+            this.state.business.map(element => {
+              
+              return(
+                <Card key={element.id} details={element} selectKnowledge={this.selectKnowledge}/>
+              )
+            })
+          }
+          
+        </Container>
+      </div>
     )
   }
 }
